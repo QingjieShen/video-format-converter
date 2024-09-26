@@ -1,0 +1,15 @@
+{
+  "name": "video-converter",
+  "version": "1.0.0",
+  "main": "video-converter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}

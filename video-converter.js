@@ -21,6 +21,13 @@ function convertVideo(inputFilePath, outputFilePath) {
     })
 }
 
+// check if a file is target video file or not
+function isValidVideoFile(file) {
+    const validExtensions = DEFAULT_VIDEO_FORMATS
+    const ext = path.extname(file).substring(1).toLocaleLowerCase()
+    return validExtensions.includes(ext)
+}
+
 // traverse folders and convert videos
 async function travsrseAndConvert(directory = __dirname, inputFormats = DEFAULT_VIDEO_FORMATS, outputFormat = 'mp4') {
     const files = fs.readdirSync(directory)
@@ -30,11 +37,11 @@ async function travsrseAndConvert(directory = __dirname, inputFormats = DEFAULT_
 
         if (stat.isDirectory()) {
             await travsrseAndConvert(fullPath, inputFormats, outputFormat)
-        } else if (stat.isFile()) {
-            const ext = path.extname(fullPath).toLowerCase().slice(1)
+        } else if (stat.isFile() && isValidVideoFile(file)) {
+            const ext = path.extname(file).substring(1).toLocaleLowerCase()
             if (inputFormats.includes(ext)) {
-                const outoutFilePath = path.join(directory, `${path.basename(file, path.extname(file))}.${outputFormat}`)
-                await convertVideo(fullPath, outputFormat)
+                const outputFile = path.join(directory, `${path.basename(file, path.extname(file))}.${outputFormat}`)
+                await convertVideo(fullPath, outputFile)
             }
         }
     }
